@@ -82,7 +82,6 @@ def classify_review(title, text):
 
     return answer
 
-
 if __name__ == "__main__":
     # These two examples are a Step 1 spot-check, not part of the data set.
     positive_sentiment = classify_review(
@@ -96,3 +95,4 @@ if __name__ == "__main__":
         "The code did not work and I could not use the card.",
     )
     print(f"Negative example: {negative_sentiment}")
+
