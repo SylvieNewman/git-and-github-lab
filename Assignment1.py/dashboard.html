@@ -1,0 +1,3820 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon Gift Card Review Sentiment Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            background: #1d3557;
+            color: white;
+            padding: 36px 8%;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        header p {
+            color: #dbeafe;
+            margin-bottom: 0;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .run-section {
+            background: white;
+            padding: 24px;
+            margin-bottom: 28px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .subtitle, .metric-label {
+            color: #64748b;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 22px 0;
+        }
+
+        .metric {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .metric-value {
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .bar-row {
+            display: grid;
+            grid-template-columns: 170px 1fr 100px;
+            gap: 12px;
+            align-items: center;
+            margin: 14px 0;
+        }
+
+        .bar-track {
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .bar-value {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: #1d3557;
+            color: white;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        .match {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .mismatch {
+            color: #c1121f;
+            font-weight: bold;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 8px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Amazon Gift Card Review Sentiment</h1>
+        <p>Model predictions compared with rating-based labels</p>
+    </header>
+
+    <main>
+        
+    <section class="run-section">
+        <h2>Original first-100 review run</h2>
+        <p class="subtitle">Binary labels: 4-5 stars = positive; 1-3 stars = negative.</p>
+
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-label">Reviews scored</div>
+                <div class="metric-value">100</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Agreement with rating</div>
+                <div class="metric-value">98.0%</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Matches</div>
+                <div class="metric-value">98</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Mismatches</div>
+                <div class="metric-value">2</div>
+            </div>
+        </div>
+
+        <h3>Rating-label distribution</h3>
+        
+    <div class="bar-row">
+        <div class="bar-label">Positive</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 93.0%; background: #2a9d8f;">
+            </div>
+        </div>
+        <div class="bar-value">93 (93.0%)</div>
+    </div>
+    
+    <div class="bar-row">
+        <div class="bar-label">Negative</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 7.000000000000001%; background: #e76f51;">
+            </div>
+        </div>
+        <div class="bar-value">7 (7.0%)</div>
+    </div>
+    
+
+        <h3>Accuracy by rating-label class</h3>
+        
+    <div class="bar-row">
+        <div class="bar-label">Positive</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 98.9247311827957%; background: #2a9d8f;">
+            </div>
+        </div>
+        <div class="bar-value">98.9%</div>
+    </div>
+    
+    <div class="bar-row">
+        <div class="bar-label">Negative</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 85.71428571428571%; background: #e76f51;">
+            </div>
+        </div>
+        <div class="bar-value">85.7%</div>
+    </div>
+    
+
+        <h3>Rating label compared with model prediction</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rating label</th>
+                        <th>Model positive</th><th>Model negative</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <th>POSITIVE</th>
+            <td>92</td><td>1</td>
+        </tr>
+        
+        <tr>
+            <th>NEGATIVE</th>
+            <td>1</td><td>6</td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Review details</h3>
+
+        <label for="original-filter">Show:</label>
+        <select id="original-filter">
+            <option value="all">All reviews</option>
+            <option value="Match">Matches only</option>
+            <option value="Mismatch">Mismatches only</option>
+        </select>
+
+        <p id="original-count"></p>
+
+        <div class="table-container">
+            <table id="original-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Stars</th>
+                        <th>Rating label</th>
+                        <th>Model prediction</th>
+                        
+        <th>LLM emotion</th>
+        <th>NRC emotion</th>
+        
+                        <th>Result</th>
+                        <th>Review text</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr data-result="Match">
+            <td>1</td>
+            <td>Great gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Having Amazon money is always good.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>2</td>
+            <td>amazon gift card</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Always the perfect gift.  I have never given one and had someone seem or act disappointed.  Just the opposite.  They are thrilled and excited to have a bit of a spree.  Always the perfect size and color!  Arrives in 1 day in most cases.  So it&#x27;s never too late!  Lots of cards to chose from... thank you... birthday... wedding..baby..  and many that work for many occasions...</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>3</td>
+            <td>perfect gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>When you have a person who is hard to shop for.. an amazon gift card is P E R F E C T.  Man or woman...  No matter what their hobby... lifestyle.. or age.  All you have to do is pick the $.  Don&#x27;t forget to mention that it is a GIFT when you check out - you will have some gift card options.  I&#x27;ve ordered many of these over years.  They are always received with glee.  Woo hoo!  If you&#x27;re looking for a great fit for me - this is just my size!  :)  Best to all!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>4</td>
+            <td>Nice looking</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>The tin is a nice touch and pretty large.  It&#x27;s about 4&amp;#34; in diameter and about 1/2&amp;#34; thick.  I added a pretty red ribbon and it is perfect.  Who doesn&#x27;t love shopping on Amazon? Arrived quickly, I have Prime... but I think they ship the gift cards out SUPER fast... like over night. In case you need it for a FAST gift.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>5</td>
+            <td>Not $10 Gift Cards</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>I bought this pack of Starbucks Gift cards in 2019. Ive given them to friends and I gave 2 to my daughter.&lt;br /&gt;My daughter used one recently and it had $6.52 on the card not $10.00. She had the cashier check the balance of the other card and it had $5.32 on it! She had forgotten that she had these gift cards, so yes, 2 years later decided to use the when she found them! Do they decline in value? And then both had random amounts on them! I&#x27;m embarrassed now to have given them as gifts! Friends receiving the gift card aren&#x27;t going to tell you that weren&#x27;t able to cover their order with the card you gave them!!!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>6</td>
+            <td>Cute!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>That snowman tin is adorable</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>7</td>
+            <td>Easy gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Great and easy gift</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>8</td>
+            <td>Great gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Super cute nice quality tin&lt;br /&gt;Your choose amount</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>9</td>
+            <td>Gifts for my two granddaughters</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>They love it !!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>10</td>
+            <td>Great for saying “thank you” to the mail person, farrier, yard man,etc</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>So many people&lt;br /&gt;Make your life better so remember them!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>11</td>
+            <td>Convenient, safe, and perfect gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>My grandson inlaw loves his gift cards, so it&#x27;s the perfect gift for Christmas</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>12</td>
+            <td>Giftcard</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>What can you say about a gift card? Well, it was valid. It&#x27;s a good gift for someone who doesn&#x27;t like to cook. Arrived promptly.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>13</td>
+            <td>Simple giftcard!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Easy way to gift money for birthdays.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>14</td>
+            <td>Great giftcard</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Great gift for online shoppers!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>15</td>
+            <td>Easy..</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Reloading is easy. Shopping is easy. Amazon is easy.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>16</td>
+            <td>One Star</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Card did not work!!!!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>17</td>
+            <td>Great Product.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>I bought this for a Christmas gift.The recipient really liked it.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>18</td>
+            <td>No note attached to sent gift card</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            <td>anticipation</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>What a pretty gift card presentation , the recipient loved it ! I have one complaint , I took the time and wrote a short note to the recipient of the gift card so she knew who and why the GC was being sent but the note wasn’t attached. I’ve used the option to write a note on many occasions and several times it showed up without the note . I actually had to contact her to ask if she had checked her mail knowing it had arrived .</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>19</td>
+            <td>Gift card</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Perfect! Arrived just when stated!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>20</td>
+            <td>Good</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good gift card</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>21</td>
+            <td>Good Product</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good Product</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>22</td>
+            <td>Good Product</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good Product</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>23</td>
+            <td>Good Product</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good Product</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>24</td>
+            <td>Good Product</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good Product</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>25</td>
+            <td>Good Product</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good Product</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>26</td>
+            <td>Good product</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good product</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>27</td>
+            <td>Good product</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good product</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>28</td>
+            <td>Good Product</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good Product</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>29</td>
+            <td>Good Product</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good Product</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>30</td>
+            <td>Good</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Good</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>31</td>
+            <td>Gift card</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Perfect for Christmas</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>32</td>
+            <td>So easy</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>Easy to do</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>33</td>
+            <td>Mistake</td>
+            <td>2.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            <td>sadness</td>
+            
+            <td class="match">Match</td>
+            <td>Hit button by mistake n deduction from credit card on file</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>34</td>
+            <td>Great gift idea</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Always great to order from my home. Amazon rocks!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>35</td>
+            <td>Secure</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>So easy to use and recipients get to choose how to use it.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>36</td>
+            <td>Birthday surprise!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>This was a good birthday surprise!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>37</td>
+            <td>Birthday Gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Have given as Holiday, Birthday &amp; Other Occasions remembrances. Always appreciated by the person receiving.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>38</td>
+            <td>Fun</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Awesome &amp; they work</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>39</td>
+            <td>Reload is super easy.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Really ready to reload gift cards.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>40</td>
+            <td>Convenience of giftabiliy.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>A great way to give a gift to family members in physical form. It was so convenient.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>41</td>
+            <td>Great Gift Package</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Nice gift packaging for any event</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>42</td>
+            <td>Grest Sandwitches !!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Perfect and I even used Amazon Points - was mailed right out.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>43</td>
+            <td>GOOD PIZZA !!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Perfect and I even used Amazon Points - was mailed right out.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>44</td>
+            <td>We like this Store and they stock Tons of different Items for all kinds of Pets</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Our cats love this place.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>45</td>
+            <td>Money was loaded on card</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Was cute and the money was loaded when it arrived</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>46</td>
+            <td>👍</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>👍</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>47</td>
+            <td>Love it!!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>This is an online gift card nothing to show sorry🤪</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>48</td>
+            <td>Five Stars</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Gift cards are always a hit.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>49</td>
+            <td>So cool you can get a free tin with the gift ...</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>So cool you can get a free tin with the gift card and it comes in 24 hours!! Super awesome. Last year I just printed off the gift cards which looked kind of cheap even though the cards were for substantial amounts. Highly recommend.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>50</td>
+            <td>Reccomend</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>Really easy to load</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>51</td>
+            <td>Little sister surprise</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Same gift as her big sister&#x27;s, this little one can choose the exact thing she most desires and run to the door for three days in anticipation.  A combined birthday and Christmas present for one who knows her own mind.  Good choice!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>52</td>
+            <td>The added value was great, but no more</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>disgust</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Purchasing an Amazon gift card came with an added monetary value but no more.&lt;br /&gt;&lt;br /&gt;A Bronx cheer for you!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>53</td>
+            <td>Perfect gift!</td>
+            <td>4.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>This is near where I work and has a drive through.  Nothing better during these times to give than a gift of good food they can pick up with minimal contact. Gift cards are the way to go these days!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>54</td>
+            <td>Great staff appreciation gift!</td>
+            <td>4.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>What better gift during these times than one to treat yourself.  This is a great gift I gave out to my staff and even those who don&#x27;t read liked the idea of being able to listen to the audiobooks as well as there being content and other media through Audible.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>55</td>
+            <td>Cute cute cute!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>I love the tin! The gift cards can be ordered on different amounts.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>56</td>
+            <td>Five Stars</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>Simple and easy.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>57</td>
+            <td>As described.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Being able to reload the gift card is a time saver.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>58</td>
+            <td>Perfect gift for any occasion. Let them pick out what they love!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>I mean really, who wouldn&#x27;t LOVE this?!?  Wonderful gift for any occasion.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>59</td>
+            <td>12 year old daughter loved this gift!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Perfect gift for your kids!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>60</td>
+            <td>Easy to send to an Amazon shopper</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>This is a simple gift to friends or family. For me it was easy to setup. Took ok only about 30 seconds. I also redeem Visa gifts by giving the gift card to myself. I like there isnt a fee. I do want Amazon to make some cooler cards with my animation when a receiver gets it.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>61</td>
+            <td>Rec&#x27;d promo from Amazon when reloading gift card.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Bonus, rec&#x27;d a promo from Amazon for reloading gift card.  Yeah.&lt;br /&gt;&lt;br /&gt;Gift card was posted to my account quickly.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>62</td>
+            <td>Saves a Little Over time.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Nice way to save a few bucks overtime by reloading your own gift card.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>63</td>
+            <td>What a great company</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Who wouldn&#x27;t want an Amazon gift card?  The box foretold the contents, lol.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>64</td>
+            <td>A problem to use at drive thru&#x27;s</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            <td>trust</td>
+            
+            <td class="match">Match</td>
+            <td>I only used the $50 card one time at Burger King. It was difficult to use. Must be run as credit, not as gift card. No remaining balance is given at the end of the transaction. And although it&#x27;s on me, I misplaced or lost this card after only spending about $6 of it. I was hoping that the seller could provide me with the full card number so that I could at least use it online for other purchases. They failed to respond. I have the receipt from BK, but it only shows the last 4 numbers. There isn&#x27;t a way of contacting happy cards customer service online that I could figure out. I wish I&#x27;d just stuck with credit cards. A lot safer.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>65</td>
+            <td>A gift card does make a great gift for a tweenager.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>We all know the kid who wants nothing. Or actually wants everything but nothing is good enough. YES,YES,the secret weapon. A AMAZON GIFT CARD!!  You pulled it off. You showed your love and you are the best and greatest. Happy Birthday to just because,You are the BEST!!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>66</td>
+            <td>Nice to have</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>disgust</td>
+            
+            <td class="match">Match</td>
+            <td>This comes in  very handy, and makes the guilt less</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>67</td>
+            <td>Excellent Gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Who would not like an Amazon Gift Card?  Makes everyone I give them, happy!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>68</td>
+            <td>Yay so easy!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>So easy! No scraping!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>69</td>
+            <td>:)</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>easy to use</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>70</td>
+            <td>10/10</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>works great</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>71</td>
+            <td>Perfect for a birthday 🎂</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Another nice gift box from Amazon. With the world the way it is now I had to send a gift rather than going to a party. And Amazon has a good selection of gift boxes and fast shipping so my nephew was happy when he received the card in the mail.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>72</td>
+            <td>Perfect!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Bought this for a gift and was very happy it shipped quickly and they received it just in time! Amazon is awesome! 🤩</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>73</td>
+            <td>Gift box nice!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Love the gift box. So much j NB icee than just handing a gift card to the grandkids.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>74</td>
+            <td>It was soooo easy</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>It was a nice way to give a present</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>75</td>
+            <td>great</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>great buy</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>76</td>
+            <td>Amazon Thinks of Everything!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>GREAT idea!  I was so happy to have these on hand for the Holidays!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>77</td>
+            <td>Amazon lover giftee?  Buy it!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>So gift card for certain sum.  No service fee.  Lively metal gift box - yes..... I said metal.  What is not to love about this???!&lt;br /&gt;&lt;br /&gt;Well done Amazon.  Well done.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>78</td>
+            <td>Timing</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>Great timing.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>79</td>
+            <td>Was easy to do</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>Easy to use</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>80</td>
+            <td>PENGUINS</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>So so cute!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>81</td>
+            <td>Believe this is the best gift to give !</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>The recipient can choose what they want so the giver has less chance of a mistake.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>82</td>
+            <td>convenient</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>A great and convenient gift idea-price is right too!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>83</td>
+            <td>Five Stars</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>The gift card came in a pretty box.&lt;br /&gt;Thanks Amozan.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>84</td>
+            <td>Best gift for someone you don’t know what to get</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>This was for a gift</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>85</td>
+            <td>Great value</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Made my shopping much better good value</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>86</td>
+            <td>Sweet gift!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>I sent this to my brother and he couldn&#x27;t stop talking about it. This boxes puts a little more nice into a gift. Very pretty!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>87</td>
+            <td>Amazing</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>It can be used for a variety of things.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>88</td>
+            <td>Great Holder</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Great holder for gift cards</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>89</td>
+            <td>Gift card</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Makes these so easy for any holiday and especially stops buying something people do not like</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>90</td>
+            <td>Starbuck gift card</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>My friend like the gift card like the sweater for holiday card</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>91</td>
+            <td>Good litte thank-you gifts</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>I&#x27;m happy they did not cost me more than their face value to buy. I gave them out as a nice thank you to those who helped me with small things around my house. I sent them in the mail as a surprise, knowing money or gifts was not necessary. I recommend them.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>92</td>
+            <td>Okay as a gift</td>
+            <td>3.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>After I bought several I realized I could have sent &quot;gift&quot; money via text without the fees or wait.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>93</td>
+            <td>Good gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Those who already have everything, they can buy an audible book, an old rerun of a favorite movie, some little thing they may want, or whatever as a gift for any occasion. I recommend.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>94</td>
+            <td>So convenient.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Arrived on time, in perfect shape, and best of all the person receiving the gift can buy whatever they want. One size fits all!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>95</td>
+            <td>Just what was ordered.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Made holiday shopping easy!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>96</td>
+            <td>Can Do It From Home</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Usually I either receive an Amazon gift card as a birthday and/or Christmas gift or I purchase them at a store. Then it&#x27;s very easy to add the amount to my gift card balance using my cell phone. Well I was stuck inside for several days due to a blizzard and I bought quite a few books then due to a travel ban I could not go to the store to purchase a gift card.&lt;br /&gt;So after checking my Gift Card Balance I saw that I had overindulged and it needed to be topped up. One of the options under Manage Your Balance was to Reload Your Balance. I had never used this option but decided to try it. It was so easy to do and I didn&#x27;t have to leave the comfort of my home. I will be using it again in the future.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>97</td>
+            <td>Love it!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Love my card!!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>98</td>
+            <td>Easy to use</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="match">Match</td>
+            <td>It’s easy to use and very convenient. I would definitely consider refill more in the future</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>99</td>
+            <td>Easy to use</td>
+            <td>3.0</td>
+            <td>NEGATIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>none</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Very easy to use. I wish I knew about it earlier</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>100</td>
+            <td>Perfect gift sent I a lovely container</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>Sent in a lovely container</td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+        
+    <section class="run-section">
+        <h2>Balanced 150-review run</h2>
+        <p class="subtitle">Three-class labels: 50 positive, 50 neutral, and 50 negative reviews.</p>
+
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-label">Reviews scored</div>
+                <div class="metric-value">150</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Agreement with rating</div>
+                <div class="metric-value">69.3%</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Matches</div>
+                <div class="metric-value">104</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Mismatches</div>
+                <div class="metric-value">46</div>
+            </div>
+        </div>
+
+        <h3>Rating-label distribution</h3>
+        
+    <div class="bar-row">
+        <div class="bar-label">Positive</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 33.33333333333333%; background: #2a9d8f;">
+            </div>
+        </div>
+        <div class="bar-value">50 (33.3%)</div>
+    </div>
+    
+    <div class="bar-row">
+        <div class="bar-label">Neutral</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 33.33333333333333%; background: #e9c46a;">
+            </div>
+        </div>
+        <div class="bar-value">50 (33.3%)</div>
+    </div>
+    
+    <div class="bar-row">
+        <div class="bar-label">Negative</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 33.33333333333333%; background: #e76f51;">
+            </div>
+        </div>
+        <div class="bar-value">50 (33.3%)</div>
+    </div>
+    
+
+        <h3>Accuracy by rating-label class</h3>
+        
+    <div class="bar-row">
+        <div class="bar-label">Positive</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 98.0%; background: #2a9d8f;">
+            </div>
+        </div>
+        <div class="bar-value">98.0%</div>
+    </div>
+    
+    <div class="bar-row">
+        <div class="bar-label">Neutral</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 14.000000000000002%; background: #e9c46a;">
+            </div>
+        </div>
+        <div class="bar-value">14.0%</div>
+    </div>
+    
+    <div class="bar-row">
+        <div class="bar-label">Negative</div>
+        <div class="bar-track">
+            <div class="bar-fill"
+                 style="width: 96.0%; background: #e76f51;">
+            </div>
+        </div>
+        <div class="bar-value">96.0%</div>
+    </div>
+    
+
+        <h3>Rating label compared with model prediction</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rating label</th>
+                        <th>Model positive</th><th>Model neutral</th><th>Model negative</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <th>POSITIVE</th>
+            <td>49</td><td>1</td><td>0</td>
+        </tr>
+        
+        <tr>
+            <th>NEUTRAL</th>
+            <td>12</td><td>7</td><td>31</td>
+        </tr>
+        
+        <tr>
+            <th>NEGATIVE</th>
+            <td>0</td><td>2</td><td>48</td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Review details</h3>
+
+        <label for="balanced-filter">Show:</label>
+        <select id="balanced-filter">
+            <option value="all">All reviews</option>
+            <option value="Match">Matches only</option>
+            <option value="Mismatch">Mismatches only</option>
+        </select>
+
+        <p id="balanced-count"></p>
+
+        <div class="table-container">
+            <table id="balanced-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Stars</th>
+                        <th>Rating label</th>
+                        <th>Model prediction</th>
+                        
+        <th>NRC emotion</th>
+        
+                        <th>Result</th>
+                        <th>Review text</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr data-result="Match">
+            <td>1</td>
+            <td>Easy to give</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="match">Match</td>
+            <td>The kids will use it</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>2</td>
+            <td>Perfume smell :(</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>disgust</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>The cards were fine but had a perfume smell - why do items you buy have to smell??</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>3</td>
+            <td>Cute and trendy</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>This was an awesome gift I could hang it on the tree til it was time to give</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>4</td>
+            <td>Horrible</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>The gift card comes in a lovely snowflake. Thankfully I opened it before giving it as a gift. There are vague instructions on the inside on how to redeem the card, and you have to download an Amazon Scanning App to your phone to redeem it.&lt;br /&gt;&lt;br /&gt;It also gives no indication in the packaging anywhere of the value of the card, and there is a different website that you have to go to for that which does not work.&lt;br /&gt;&lt;br /&gt;My feeling is that this card would have way more 1star reviews, but people who receive them as gifts are likely too polite to mention the issues to the people who gifted them.&lt;br /&gt;Horrible.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>5</td>
+            <td>Frustrating. Worked once, but doesn&#x27;t work at all ...</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Frustrating. Worked once, but doesn&#x27;t work at all now. Nothing has changed at all between in any settings, Amazon and bank.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>6</td>
+            <td>Grandsons at college had already eaten and card had no money on it.</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>$25.00 Card was sent by amazon with no money on it. Grandsons mom had to give debit card over phone to pay for their meal. I’ll never buy a card from amazon again for Pizza Hut. It was very embarrassing.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>7</td>
+            <td>Cash was spent</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>One of my cards had already been used and nothing was done to replace it.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>8</td>
+            <td>Best gift ever!!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>What can you say about a gift card really? My husband uses them to buy books and it&#x27;s always a one size fits all:)</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>9</td>
+            <td>Popcorn maker</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Works great &amp; kids love it!</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>10</td>
+            <td>A perfect find the right price Excellent! very good product Very good Shipping was speedy.</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Happy with this purchase. Great product.  Really hard to beat for the price, and comfortable. I would highly recommend this product, I brought it for my daughter  so far solid product, no issues, charges fast and very quick shipping. definitely recommend Shipping was speedy.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>11</td>
+            <td>Five Stars</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="match">Match</td>
+            <td>Works</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>12</td>
+            <td>Very disappointed.</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Horrible!  This came with NO note, no mention of who it was from or the amount.  I added a gift message during checkout but there was nothing in the tin except a crumpled up paper gift card.  I was so embarrassed when the recipient received it.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>13</td>
+            <td>Gift Card</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="match">Match</td>
+            <td>As advertised.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>14</td>
+            <td>One Star</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Declined at the store, and told there was no balance on the card.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>15</td>
+            <td>failed product</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>not clear...... make it easier</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>16</td>
+            <td>Very fast reload!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Purchased for in-game play</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>17</td>
+            <td>Love the tiny amazon smile gift box!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Giving a gift card in a tiny amazon box with the amazon smile was a wonderful idea. I&#x27;ll get more of these as gifts in the future.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>18</td>
+            <td>Very disappointed with Amazon (for the first time in many years ...</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="match">Match</td>
+            <td>Very disappointed with Amazon (for the first time in many years of buying everything and anything from you).  I deliberately paid for a tin and gift wrapping for the gift cards, also selecting the option that states that the item is clearly a gift so that my daughter and her husband would get a surprise and have a parcel to put under the Christmas tree, but on receiving the two packages they were provided with an Amazon receipt which stated that there were two gift cards worth $150 each inside!!!</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>19</td>
+            <td>Gift Certificate</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>This gift requested by my grandsons.  Other gift certificates from other vendors arrived in a presentable gift box ready for gift wrapping.  These arrived just as I would have taken them from a carousal in a grocery store.  Not complaining, just not impressed.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>20</td>
+            <td>Perfect gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Cant go wrong with a gift card.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>21</td>
+            <td>good</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>not bad</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>22</td>
+            <td>Amazon Reload - automatic</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I dislike the fact that I was charged for a reload that I didn&#x27;t order however, I was able to make use of it...</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>23</td>
+            <td>The person it was going to were not right</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>The person receiving and person from was not put on correctly.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>24</td>
+            <td>Arrived damaged, battered and non giftable</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Some arrived great but one arrived beaten up. Gift cards should be giftable :(</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>25</td>
+            <td>Beautiful box!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>The box came very well packaged and in perfect condition! Definitely recommend as a gift!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>26</td>
+            <td>Got to love a gift card to Applebees</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Got to love a gift card to Applebees. As expected!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>27</td>
+            <td>Disappointing</td>
+            <td>2.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="match">Match</td>
+            <td>Quite difficult to reload.  Page and instructions are extremely confusing.  Or maybe it&#x27;s me.  Maybe I switched to Swedish.  Got it done ONCE and then after I tried it again, from scratch, was totally lost and, surprise, it did not function.  Sad but quite true.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>28</td>
+            <td>Thank you</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>I gave it to my grandson he loved it</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>29</td>
+            <td>UNDELIVERABLE?</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>How can a gift card be undeliverable?</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>30</td>
+            <td>Five Stars</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Such a cute sturdy little gift card. Love how it fits in the flower pot cardboard case!  :O)</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>31</td>
+            <td>Wrong box</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I ordered Amazon $100 gift card in a graduation cap box however the one I received was not in a graduation box! The box is bow tie!!! The only reason I bought the gift card as a gift for a graduation.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>32</td>
+            <td>As expected</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
+            
+            <td>trust</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>As expected</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>33</td>
+            <td>3 gift cards</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I ordered 3 cards 2 for 10 and 1 for 20. they all look the same and I don&#x27;t know which one is the 20 dollar card.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>34</td>
+            <td>No money on cards</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I gave these cards as gifts. There isn&#x27;t any money on them.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>35</td>
+            <td>Three Stars</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Good</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>36</td>
+            <td>Three Stars</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Can Not use to purchase Audible</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>37</td>
+            <td>I love the floral box but I&#x27;m not a fan of ...</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEUTRAL</td>
+            
+            <td>disgust</td>
+            
+            <td class="match">Match</td>
+            <td>I love the floral box but I&#x27;m not a fan of the fact that the card itself does not show the amount</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>38</td>
+            <td>Warning Don’t Buy Gift Cards</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Don’t buy gift cards from Amazon it will mess up up any order you placed. All my orders were cancel without checking to see if I placed them and It took me almost 3 weeks to get someone to do what he promised and give my money back to me. NEVER again will buy a gift card and I warn anyone else not to buy one. I had to give it a rating but if I could it would be a (-)  negative 1</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>39</td>
+            <td>Five Stars</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Great gift!</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>40</td>
+            <td>Late Card</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I ordered a Amazon Gift card for my moms birthday on April 30th before 2pm.  It was supposed to arrive on the May 2nd her birthday, instead it arrived a day late.  Glad I didnt pay for shipping.  I even gave amazon a break and what do I get a late gift.. great.  This is the second time this has happened to me with this product... so much for free 2 day shipping!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>41</td>
+            <td>reviewing an Amazon gift card!</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEUTRAL</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Come on reviewing an Amazon gift card! This is just to delete the constant reminder.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>42</td>
+            <td>great gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>This made a great gift for my mom to go along with the Kindle Fire that she received for Christmas!  She ws able to buys some books and a cover for her Kindle.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>43</td>
+            <td>This makes a great wedding gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>This makes a great wedding gift, easy to purchase, arrived in a swift manner and provides the wedding couple a gift they wanted.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>44</td>
+            <td>Arrived ripped. Packaging was fine so card was already damaged when selected for shipping.</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I&#x27;m supposed to give this as a gift for Xmas??? Both the $100.00 card AND the $50.00 card were ripped!!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>45</td>
+            <td>card didn&#x27;t work</td>
+            <td>2.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>product didn&#x27;t work</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>46</td>
+            <td>I will keep trying. Thank you</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Could not get it</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>47</td>
+            <td>No problems</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Easy to use.  I like using visa gift cards from the holidays to reload.  Always easy</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>48</td>
+            <td>I am all for reload</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="match">Match</td>
+            <td>It was nice to be able to reload rather than having to create another account and so forth. I plan to do it as often as I need to, to keep my account ready for business.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>49</td>
+            <td>Just being wasted-can’t use</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Wasn’t what I wanted</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>50</td>
+            <td>looks very nice</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Comes in a box ,very nice for gift-giving</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>51</td>
+            <td>Card arrived with no funds.</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Do NOT purchase.  Amazon holds no responsibility if the card is bad. The Card manufacturer says its Amazons fault because the card wasn&#x27;t processed correctly. Amazon says they have a no refund/return policy and there us nothing they can do, but they have no problem keeping our money. So I&#x27;m out $105.95 and Amazon gets a good laugh.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>52</td>
+            <td>Difficult to change deferred payments</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I liked nothing about new  reload amounts&lt;br /&gt;Mostly gift cards. Many other products</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>53</td>
+            <td>Santa Gift Card Box</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEUTRAL</td>
+            
+            <td>sadness</td>
+            
+            <td class="match">Match</td>
+            <td>Great gift card presentation device.  However, the paint on edges of the lids was marred/chipped.  Ordered replacements still not perfect.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>54</td>
+            <td>Knowing</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEUTRAL</td>
+            
+            <td>surprise</td>
+            
+            <td class="match">Match</td>
+            <td>I don&#x27;t know what this is</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>55</td>
+            <td>Five Stars</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>great</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>56</td>
+            <td>I asked her for a mistake</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
+            
+            <td>trust</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I asked her for a mistake</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>57</td>
+            <td>This doesn&#x27;t work.</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Totally confusing..</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>58</td>
+            <td>Did not receive the amount I chose.</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I chose the $200 amount but received two $50 cards instead. Don’t want to order two more cards to make it the $200 I wanted.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>59</td>
+            <td>another good buy</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>my daughter loves starbucks so she gets a gift card every three months.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>60</td>
+            <td>👍</td>
+            <td>4.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>👍</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>61</td>
+            <td>excelente</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>siempre me resulta de ayuda para las compras de mis productos en Amazon</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>62</td>
+            <td>Gift cards</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Did u know u can take left over balances from any other gift card and add it to your Amazon account. Tried it and love it. Those $2-$4 left over add up!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>63</td>
+            <td>Not good</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="match">Match</td>
+            <td>Not good</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>64</td>
+            <td>I couldn’t get the code, customer service made a mistake trying to help.</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>So I ordered three gift cards for some friends and family. Two ended up staying with me because some family members never bothered to show up. One went to my sister. This particular one.. the sticker for the code would absolutely not peel off. I even tried to scrape it off. I called customer service for help and the lady whom helped me was very nice and helpful. However, she accredited my account all three gift cards, including the one I just gave my sister for Christmas. I did not know this since I am brand new to using amazon and all this stuff. And I only called to get the code for this ONE anyways. Not all three. Now my sisters gift card is completely invalid and I just gave it to her! I wish I could perhaps have it refunded for her. I had no idea when using my gift card, the one that I called about, that hers was applied to my cart at checkout as well! After the holidays I don’t have the money to get my sister another gift card. Hopefully amazon can help refund that for her. I will update if they help. And if they don’t for that matter!.. otherwise it’s a regular gift card. So it’s fine. I’m just fuming at the mistake they cost me.&lt;br /&gt;&lt;br /&gt;Edit for if anyone from amazon reads this. The woman that helped was incredibly nice and helpful. It was just a communication mistake I believe. But I do hope to get refunded for my one gift card for my sister so she can have her gift. Especially since I called to only get the code for ONE that wouldn’t peel off to reveal the code.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>65</td>
+            <td>What&#x27;s the serial number and amount?</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>fear</td>
+            
+            <td class="match">Match</td>
+            <td>This card arrived. It was a replacement card for a previous one misdelivered and stolen. This new card shows $.00 value. The value and serial number are not listed on the order. The card has a serial number with no value. How do I know it&#x27;s good? I want to deliver it as a gift.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>66</td>
+            <td>Does not work - Amazon has to activate</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Look at the other reviews, Amazon as the seller does not activate the card with VISA, so as the customer you are unable to activate via VISA. There is no fix. Do not buy</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>67</td>
+            <td>Best way to go</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>I previously used to buy myself a gift card and emailed or texted it to myself, I didn&#x27;t know about this, it&#x27;s much easier and faster.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>68</td>
+            <td>Convenient</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Simplifies making purchases.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>69</td>
+            <td>no extra 10% with reload</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I thought I was going to get a 10% bonus with the reload of $100, but I only got the $100.&lt;br /&gt;&lt;br /&gt;no frills, just tied up money.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>70</td>
+            <td>Amazon Gift Card Fails</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Bought, card not activated, and still not resolved.  Multiple email and hoops to jump thru.  This was a gift and is very embarrassing to give and be told it doesn’t work!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>71</td>
+            <td>Best hair gel ever!</td>
+            <td>4.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>You want it stays get Redken Hair though gel’</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>72</td>
+            <td>Amazon does it best</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>They make reloading your gift card balance a breeze! Love Amazon :D</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>73</td>
+            <td>No delete or cancel?</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Tried to add to my balance with an Amex gift card. Amazon did a transaction for .10 ...then declined the payment method. I now have a gift card with 299.90 balance and an order for 300.00 reload that I can&#x27;t edit the amount or delete. Amazon keeps sending &quot;update payment method&quot; messages...help &quot;chat&quot; is automated, you don&#x27;t get to type only select from 2 answers and just circles back to &quot;update payment method&quot; 🙄</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>74</td>
+            <td>Great gift idea!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Received a gift card as a gift. So easy to use.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>75</td>
+            <td>Recipient unable to redeem gifts on Amazon</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I bought several of these gift cards and the recipients were not able to redeem the cards.  I had to deal with Amazon to redeem them.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>76</td>
+            <td>Gift message was not left with package, my brother had no idea who it was from, very disappointing.</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Should have given the gift message with the gift card so my brother knew who it was from.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>77</td>
+            <td>Three Stars</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>good</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>78</td>
+            <td>You have to pay to spend $50.00</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>That’s a shame I had to pay to spend $50.00.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>79</td>
+            <td>Be aware that card inside is cardboard and NOT plastic!</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I can&#x27;t believe I&#x27;m actually writing a review for a gift card holder, but here we are! My cupcake holder arrived dirty, and I had to clean it with an alcohol wipe to remove all the sticky black residue on the front. Not sure what could have caused said residue, as nothing sticky was present elsewhere. The gift card itself, much to my surprise, was cardboard and NOT plastic like every other card I&#x27;ve ordered from Amazon in the past. Because of this the card was bent and creased in three of four corners due to being wedged into the box. The box itself (once cleaned) is really cute, but the lack of quality control is seriously disappointing.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>80</td>
+            <td>Take note of purchase fees</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>disgust</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>This was a simple gift but I felt my stomach turn when I was charged an extra&lt;br /&gt;4.95 just for the right to give Mastercard my money.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>81</td>
+            <td>money...</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>money in a differnet form... whats not to love</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>82</td>
+            <td>This process is a nightmare</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I’ve now dealt with customer service I’m excess of 4 hours for one transaction. I place the original order on Sunday and told that it would take additional time to process my reload. How much time? Not the 5 minutes being offered on the website. NOPE. I WOULD HAVE TO WAIT 24 UP TO 48 HOURS!!  I wait for two days only to find out the order was canceled and that I would have to redo the reload. I do for whatever stupid reason and fast words 24 hours and STILL no balance available for the reload.&lt;br /&gt;&lt;br /&gt;At this point my order has been declined because what I thought would take 5 MINUTES has taken two separate reloads and several days later and I STILL DO NOT HAVE A RESOLUTION!&lt;br /&gt;&lt;br /&gt;I pointed out that I could’ve just purchased Amazon gift cards and loaded them faster than this garbage process!!!&lt;br /&gt;&lt;br /&gt;I’m so upset at how poorLy this has transacted!!!</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>83</td>
+            <td>Three Stars</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>So convenient and easy to use</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>84</td>
+            <td>I did not receive Amazon Prime Day promotional credit</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I bought a gift card reload on Prime Day.  There was an Amazon offer: &quot;Prime Member Exclusive - Get a $10 promotional credit when you buy $40 in Amazon Gift Cards or reload you gift card balance with $40 or more - Enter promotion code at checkout&quot;&lt;br /&gt;I purchased a $40 reload but I didn&#x27;t receive the $10 promotional credit.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>85</td>
+            <td>Nice card, late delivery</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>The card was nice quality, but it was delivered a day later than promised, which had it arriving after the birthday party it was for.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>86</td>
+            <td>Why am I asked to review this?</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>surprise</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I used reload once because they gave a free $10. Will I use it again? Doubt it. What&#x27;s the point when my account already has a linked credit card?</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>87</td>
+            <td>Misleading promise of $10 to reload</td>
+            <td>2.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="match">Match</td>
+            <td>I was disappointed to find I did not get the advertised $10 added to my reload of my gift card. Alas. There was a tidbit that was not included in this misleading promise. Bummer.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>88</td>
+            <td>Works but you don&#x27;t get any bonus like they advertise</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I never got the bonus for reloading my account</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>89</td>
+            <td>Easy to use.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Very happy with the card and how easy it is to use!</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>90</td>
+            <td>Gift box damaged prior to sealing shipping box.</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Gift box was totally crushed. Had to use one of my own. The way it was boxed whoever put it in the box knew before sealing it the gift box was damaged. Card is good but tacky job of packaging.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>91</td>
+            <td>Easy</td>
+            <td>4.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>I like that it was so easy to load then use on my account</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>92</td>
+            <td>Apples narrow market</td>
+            <td>4.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="match">Match</td>
+            <td>Hate to buy these at full price but worth it</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>93</td>
+            <td>A must!!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Great gift to give. I bought for my sister for mother&#x27;s day and she bought the same one for me for mother&#x27;s day. Great minds think alike and I was so happy to give but also to receive.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>94</td>
+            <td>...</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I bought this and there was no money loaded on it. The people i gifted this towards could not use it</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>95</td>
+            <td>Quality</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I bought a wireless key board and mouse, it works great. The shipping was fast and it arrived in perfect condition. Thanks.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>96</td>
+            <td>Fake</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>This item did not work - seller did not allow return</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>97</td>
+            <td>Fast delivery</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Great for special occasions. Receipeans can choose their own gifts.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>98</td>
+            <td>Great</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="match">Match</td>
+            <td>Great quality, exactly as described</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>99</td>
+            <td>False advertisement</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>What I didn&#x27;t like is that for every $100. Says I should get $110. And I didn&#x27;t.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>100</td>
+            <td>Thanks</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Thank</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>101</td>
+            <td>Hassle, and it loaded it twice instead of once like I wanted it to.</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Tried to reload and it did it twice when I only wanted to reload it once.  So ended up with over $200 coming out of my bank account.  Oh said the first reload was not successful, so I re tried it, and it loaded it up twice.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>102</td>
+            <td>Outback&#x27;s Gift Card online ordering site SUCKS!</td>
+            <td>2.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>BE VERY CAUTIOUS ordering Gift Cards for the Holidays! Terrible time ordering Gift Cards online this year. Never had this problem in all the past years I ordered them. There was NO preview of order before check out. There was NO mention of the $10 Bonus for every $50 purchase on the order form. The edit function DID NOT WORK. &quot;For security reasons&quot; I was not permitted to make corrections through a live chat or phone call. I was required to send an email with my concerns. Hope they improve their online purchasing site for future transactions or I will no longer be a customer. This took hours to (hopefully) get resolved.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>103</td>
+            <td>Card, Yes -  Fee, No</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEUTRAL</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I used this item to give as a gift for Christmas. It&#x27;s easy to give this to someone so that they can shop for whatever they want. I don&#x27;t like paying the fee to have the card activated. I think that&#x27;s expensive and wrong.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>104</td>
+            <td>A complete mess!</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I purchased two of these. The moment I registered them they were hacked and used. It has been two weeks now with the company trying to get my money back and still no resolution and now they are saying it can be another month to three months for a resolution, yet they keep saying they know I didn&#x27;t make the purchases. I am so frustrated and exhausted with this process and out $200 right now!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>105</td>
+            <td>Great purchase</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Giftable</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>106</td>
+            <td>Five Stars</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="match">Match</td>
+            <td>A nice way to have money available in case of capital controls :)</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>107</td>
+            <td>Nicely boxed gift card</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Great gift card for a young child.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>108</td>
+            <td>Great price for the restuarants that I use</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>I would recommend this gift card at this amazing price.  You can use for several restaurants..</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>109</td>
+            <td>Problem with these cards !</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>GEEES............PUT THE DENOMINATION ON THEM !&lt;br /&gt;Can&#x27;t you see the problem this is causing people : (</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>110</td>
+            <td>Good value,  there gift cards.</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="match">Match</td>
+            <td>Good value, there gift cards.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>111</td>
+            <td>Good gift</td>
+            <td>4.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Good for any occasion.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>112</td>
+            <td>Don’t know what this is and how to use. Please get back to me.</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>surprise</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Don’t know what this is or when I bought it. Please get back to me.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>113</td>
+            <td>NOT HAPPY with Kindle Gift Card</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>My darling husband innocently bought me a $50 Kindle Gift Card for Christmas thinking it would give me hours of reading pleasure.  However, there seems to be no way of earmarking the gift card for Kindle books only.  The next very mundane purchase I made on Amazon came out of the gift card, using the entire amount.  Neither of us is happy about this.  Never again.  (By the way, I love my Kindle.  We&#x27;ll just never buy a Kindle gift card again.)</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>114</td>
+            <td>Three Stars</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>$5 extra fee is harsh</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>115</td>
+            <td>I just wasted a lot of time</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I ended up not ordering.  Changing my password after all these years was a hassle plus finding a place for a donor name for a gift became too difficult. When I had trouble I should have been able to give an order verbally to a salesperson.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>116</td>
+            <td>Handed to resident??!! I don&#x27;t think so!</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Three Amazon gift cards that are to be given to my employees as Christmas gifts. No big deal. Except that I had them shipped to my house on a Saturday knowing that someone would be at home when the package would arrive. I did not see anything show up that day, I had been checking the front door step and mailbox until 6pm (after dark, of course). This morning (the next day) I decided to check to see the status of the package, thinking that it was going to be a late arrival. Order status says that it was delivered on Saturday, and then goes on to say that it was handed to resident. That is just a flat out lie! it was lying on the porch in front of the door (fortunately!). But the doorbell had not been rung, and it certainly wasn&#x27;t handed to anyone in my house. If you made the delivery and left it on the doorstep, fine, just say that. But don&#x27;t lie about handing it to someone in the house. That is really irritating. I&#x27;m thankful it wasn&#x27;t stolen. It was small enough that it would not have been noticed from the road, especially after dark.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>117</td>
+            <td>All time gift option</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Invite for wedding / Birthday party / Baby shower...!! Go to Amazon and order gift card ... See that’s so easy and best thing to gift ...</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>118</td>
+            <td>Low rating becuase the package blew away...</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>All was great until the delivery driver set a small LIGHT package on the doorstep instead of security it with a rock or something heavy. The giftcard likely blew away....</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>119</td>
+            <td>Amazon is not honest!!!!</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Amazon, is not honest. The card was not valid. The code on the card was invalid. We called and they did not correct the problem. We lost $150 dollars.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>120</td>
+            <td>No alerts when balance is low</td>
+            <td>2.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I use gift card to order my reading material...nothing else...I use my credit card for other purchases.  If I don&#x27;t check every time I order a book...it is charged to my credit card...sometimes for a few cents on the dollar.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>121</td>
+            <td>Convenient for purchases!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>I love being able to add money to this card! It is very convenient!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>122</td>
+            <td>Sunday delivery was excellent BUT the birthday greeting I wrote was non-existent nor ...</td>
+            <td>2.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Sunday delivery was excellent BUT the birthday greeting I wrote was non-existent nor was there any indication to the recipient that it was I who sent it.  Not good.  Recipient after checking with a few people finally called me long distance to ask if I had sent it.  Amazon, you need to do a better job at this.  Again, I applaud the free one-day delivery but that benefit was negated by the sloppy handling of the greeting I had written for the recipient.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>123</td>
+            <td>$25 Visa cards do not work</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I have ordered three $25 Visa cards none of which have worked. All $50 and $100 cards have worked fine. My $25 cards have been refunded. Amazon is investigating problem with $25 cards.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>124</td>
+            <td>$100.00 VISA Gift Card</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Was this card activated and ready to use?&lt;br /&gt;It was a Birthday Gift to My Mom, Georgia Sanchez. My Mom Georgia Sanchez, tried to use the card again and it didn’t work.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>125</td>
+            <td>Another good experience!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Anything that I do with this company seems to have a good ending!</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>126</td>
+            <td>Package was damaged.</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>This product is great for moisturizing around the eyes. It makes them feel vibrant and takes away the look of being tired.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>127</td>
+            <td>Already used</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>Was tampered with upon arrival. Called Nordstrom to see if there was any balance on the giftcard, when they informed us that the card had immediately been voided after activation. Do not purchase this.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>128</td>
+            <td>Reload</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Took a little bit to figure out but very neat being able to use my gift card for this</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>129</td>
+            <td>Not a true gift card in the usual sense</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I didn&#x27;t realize that this gift card was not an actual card, and was only redeemable by going online and using giftcards.com web site, which makes a rather simple gift into a task for the person I had planned to give it to.&lt;br /&gt; I take responsibility for not reading thoroughly through the description of this gift before purchase, and it is a lesson learned on my part.  Make sure the person you gift this to doesn&#x27;t mind additional steps in receiving benefits of gift.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>130</td>
+            <td>Item delivered damaged and bent</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Had to get refund no exchange</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>131</td>
+            <td>Gift card is a JUNK</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I will give this no star but there is no choice for none.&lt;br /&gt;What an embarrassing moment to get a call from the recipient of this card to let me know that when she redeemed the gift card it has Zero balance. Bought 2 gift cards for birthday. I have to call the other celebrant that the card has no value and not to redeem it. DON&#x27;T BUY if you don&#x27;t want to get embarrass.&lt;br /&gt;First time I purchased gift cards from Amazon...  will never buy this again.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>132</td>
+            <td>Great Gift but only if it works!</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>trust</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Gift Cards are the truly personal gift.  My only problem is after I received it and could have given it away as a gift I got an email from Amazon - whoops we forgot to activate your card.  Be sure your card is good before giving as a gift.  Amazon is very good about notifying and doing refunds but this could leave a procrastinator in the lurch with a bad gift which really will be good when Amazon knows the problem.  Kudos for the quick second card and I&#x27;ve checked it and it&#x27;s fully loaded.  Thanks!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>133</td>
+            <td>Box came dirty and missing bow</td>
+            <td>2.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>It was supposed to be a gift for my friend and the box came all dirty and on top of it, it&#x27;s missing the bow. See the pictures.&lt;br /&gt;&lt;br /&gt;Now I am trying to find some kind of sleeve or may be a small gift bag so it looks presentable.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>134</td>
+            <td>Gift Card comes in a cardboard box</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>disgust</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Don&#x27;t like the cardboard box it came in to be given. It was purchased as a gift</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>135</td>
+            <td>Huge</td>
+            <td>2.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>surprise</td>
+            
+            <td class="match">Match</td>
+            <td>Huge!  Would  not fit in an envelope with card.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>136</td>
+            <td>Three Stars</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEUTRAL</td>
+            
+            <td>anticipation</td>
+            
+            <td class="match">Match</td>
+            <td>I wanted gift cards in the amount of $100.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>137</td>
+            <td>Five Stars</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Holiday Gift</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>138</td>
+            <td>Cute gift card holder</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Nice gift card holder.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>139</td>
+            <td>com gift cards are nice and convenient but when they ship</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEUTRAL</td>
+            
+            <td>surprise</td>
+            
+            <td class="match">Match</td>
+            <td>The Amazon.com gift cards are nice and convenient but when they ship, nobody suspects that its a Christmas gift and people may decide to open them early. I guess they (your intended recipients) expect prior notice before opening random tins being sent to their residence. I am also not exactly sure what it looks like as I&#x27;ve never received one shipped, so I can only assume.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>140</td>
+            <td>🙂</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>:)</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>141</td>
+            <td>Family didn&#x27;t know if this was a hack</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>fear</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Sent this to my brother-in-law for a Christmas gift. He didn&#x27;t even know where it came from and thought it was a swindle. I had filled out the gift card that was supposed to be with it. He tried it for something, and it worked. I called him after Christmas to see if he got it and he explained the story of how he had even called Amazon and they couldn&#x27;t give him any answers. So, until I called, he didn&#x27;t even know who sent it.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>142</td>
+            <td>?</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>disgust</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I mean, I guess. I don&#x27;t see the point, just use your card in my opinion.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>143</td>
+            <td>The Tin Was Dented in Two Places</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I love Amazon and I personally love getting their gift cards. Imagine my disappointment when I opened this box, which is a gift to my Mom, and discovered the tin was dented in two places. I know it happens but the other gift card I ordered, which was in a paper box, arrived perfect. Oh well, just took the card out of the tin and used another one.</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>144</td>
+            <td>Not what i was looking for</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>sadness</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>I think I should have read the details better. I was thinking this will come with the gift cover!!!!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>145</td>
+            <td>Wasn’t activated</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>It didn’t work. The store said it was not activated. This was a GIFT!!! I am sure my sister was very embarrassed...</td>
+        </tr>
+        
+        <tr data-result="Mismatch">
+            <td>146</td>
+            <td>IT DOESNT APPLY THE 10.00 dlls DISCOUNT OFFER AFTER RELOADING THE CARD</td>
+            <td>3.0</td>
+            <td>NEUTRAL</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="mismatch">Mismatch</td>
+            <td>Is definitely easy to use. However NEVER GIVES ME THE PROMISE PRICE!!!&lt;br /&gt;Every time I’m offered to reload de card and offers me the 10.00 less/discount/promo/offer from for my order n shipment orinal price,  IT DOES’NT  APLIES The 10.00 less to the order.</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>147</td>
+            <td>The Perfect Gift</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Well-designed, well-packaged-- the perfect gift!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>148</td>
+            <td>Good</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Thank</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>149</td>
+            <td>Perfect for teens!</td>
+            <td>5.0</td>
+            <td>POSITIVE</td>
+            <td>POSITIVE</td>
+            
+            <td>joy</td>
+            
+            <td class="match">Match</td>
+            <td>Perfect gift!</td>
+        </tr>
+        
+        <tr data-result="Match">
+            <td>150</td>
+            <td>Double Charged... charged on Gift card as well as Amazon Credit Card</td>
+            <td>1.0</td>
+            <td>NEGATIVE</td>
+            <td>NEGATIVE</td>
+            
+            <td>anger</td>
+            
+            <td class="match">Match</td>
+            <td>I was charged on the gift card as well as the Amazon Synchrony Credit Card. Beware of this issue!! Better not be double charged than save a few bucks. I am having Amazon investigate it.</td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    </main>
+
+    <script>
+        function filterReviews(sectionId) {
+            const selectedFilter =
+                document.getElementById(sectionId + "-filter").value;
+
+            const rows =
+                document.querySelectorAll(
+                    "#" + sectionId + "-table tbody tr"
+                );
+
+            let visibleCount = 0;
+
+            for (const row of rows) {
+                const shouldShow =
+                    selectedFilter === "all" ||
+                    row.dataset.result === selectedFilter;
+
+                row.style.display = shouldShow ? "" : "none";
+
+                if (shouldShow) {
+                    visibleCount += 1;
+                }
+            }
+
+            document.getElementById(sectionId + "-count").textContent =
+                visibleCount + " review(s) visible";
+        }
+
+        for (const sectionId of ["original", "balanced"]) {
+            document.getElementById(sectionId + "-filter").addEventListener(
+                "change",
+                function () {
+                    filterReviews(sectionId);
+                }
+            );
+
+            filterReviews(sectionId);
+        }
+    </script>
+</body>
+</html>

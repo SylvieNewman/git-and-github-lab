@@ -6,6 +6,8 @@ read the Amazon data or use a star rating.
 
 import json
 from urllib import request
+import gzip
+from pathlib import Path
 
 
 BASE_URL = "http://dobolyi.com:9000/v1"
@@ -40,7 +42,12 @@ For a very short review with little or no text, an optimistic title is usually
 POSITIVE. However, short negative titles or short negative text, such as
 "Terrible" or "Did not work", are NEGATIVE.
 
-Reply with exactly one word: POSITIVE or NEGATIVE.
+Also choose one primary emotion from this list:
+anger, anticipation, disgust, fear, joy, sadness, surprise, trust.
+
+Reply with JSON only, using this exact format:
+
+{{"sentiment": "POSITIVE", "emotion": "joy"}}
 
 Review title: {title}
 Review text: {text}
@@ -75,24 +82,78 @@ def classify_review(title, text):
     with request.urlopen(model_request) as response:
         response_data = json.loads(response.read().decode("utf-8"))
 
-    answer = response_data["choices"][0]["message"]["content"].strip().upper()
+    answer = response_data["choices"][0]["message"]["content"].strip()
 
-    if answer not in ["POSITIVE", "NEGATIVE"]:
-        raise ValueError(f"The model returned an unexpected answer: {answer}")
+    classification = json.loads(answer)
 
-    return answer
+    predicted_sentiment = classification["sentiment"].upper()
+    llm_emotion = classification["emotion"].lower()
+
+    valid_sentiments = ["POSITIVE", "NEGATIVE"]
+    valid_emotions = [
+        "anger",
+        "anticipation",
+        "disgust",
+        "fear",
+        "joy",
+        "sadness",
+        "surprise",
+        "trust",
+    ]
+
+    if predicted_sentiment not in valid_sentiments:
+        raise ValueError(f"Unexpected sentiment: {predicted_sentiment}")
+
+    if llm_emotion not in valid_emotions:
+        raise ValueError(f"Unexpected emotion: {llm_emotion}")
+
+    return predicted_sentiment, llm_emotion
+
+SCRIPT_FOLDER = Path(__file__).parent
+DATA_FILE = SCRIPT_FOLDER / "Gift_Cards.jsonl.gz"
+OUTPUT_FILE = SCRIPT_FOLDER / "first_100_predictions.jsonl"
+NUMBER_OF_REVIEWS = 100
+
+
+def classify_first_100_reviews():
+    """Classify 100 reviews using only title and text."""
+
+    with gzip.open(DATA_FILE, "rt", encoding="utf-8") as data_file:
+        with open(OUTPUT_FILE, "w", encoding="utf-8") as output_file:
+            for review_number, line in enumerate(data_file, start=1):
+                review = json.loads(line)
+
+                # We do not give the model the star rating.
+                title = review.get("title") or ""
+                text = review.get("text") or ""
+
+                predicted_sentiment, llm_emotion = classify_review(title, text)
+                rating = review.get("rating")
+
+                result = {
+                    "review_number": review_number,
+                    "title": title,
+                    "text": text,
+                    "rating": rating,
+                    "llm_emotion": llm_emotion,
+                    "predicted_sentiment": predicted_sentiment,
+                }
+
+                output_file.write(json.dumps(result) + "\n")
+
+                print(
+    f"Review {review_number}: "
+    f"{predicted_sentiment} | Emotion = {llm_emotion} | "
+    f"Star rating = {rating} | Title: {title}",
+    flush=True,
+)
+
+                if review_number == NUMBER_OF_REVIEWS:
+                    break
+
+    print("\nFinished classifying 100 reviews.")
+    print("Predictions were saved in first_100_predictions.jsonl.")
+
 
 if __name__ == "__main__":
-    # These two examples are a Step 1 spot-check, not part of the data set.
-    positive_sentiment = classify_review(
-        "Perfect gift",
-        "The card arrived quickly and was easy to use.",
-    )
-    print(f"Positive example: {positive_sentiment}")
-
-    negative_sentiment = classify_review(
-        "Very disappointing",
-        "The code did not work and I could not use the card.",
-    )
-    print(f"Negative example: {negative_sentiment}")
-
+    classify_first_100_reviews()
