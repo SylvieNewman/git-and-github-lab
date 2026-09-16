@@ -1681,17 +1681,17 @@
 
             <div class="metric">
                 <div class="metric-label">Agreement with rating</div>
-                <div class="metric-value">69.3%</div>
+                <div class="metric-value">72.7%</div>
             </div>
 
             <div class="metric">
                 <div class="metric-label">Matches</div>
-                <div class="metric-value">104</div>
+                <div class="metric-value">109</div>
             </div>
 
             <div class="metric">
                 <div class="metric-label">Mismatches</div>
-                <div class="metric-value">46</div>
+                <div class="metric-value">41</div>
             </div>
         </div>
 
@@ -1734,30 +1734,30 @@
         <div class="bar-label">Positive</div>
         <div class="bar-track">
             <div class="bar-fill"
-                 style="width: 98.0%; background: #2a9d8f;">
+                 style="width: 82.0%; background: #2a9d8f;">
             </div>
         </div>
-        <div class="bar-value">98.0%</div>
+        <div class="bar-value">82.0%</div>
     </div>
     
     <div class="bar-row">
         <div class="bar-label">Neutral</div>
         <div class="bar-track">
             <div class="bar-fill"
-                 style="width: 14.000000000000002%; background: #e9c46a;">
+                 style="width: 50.0%; background: #e9c46a;">
             </div>
         </div>
-        <div class="bar-value">14.0%</div>
+        <div class="bar-value">50.0%</div>
     </div>
     
     <div class="bar-row">
         <div class="bar-label">Negative</div>
         <div class="bar-track">
             <div class="bar-fill"
-                 style="width: 96.0%; background: #e76f51;">
+                 style="width: 86.0%; background: #e76f51;">
             </div>
         </div>
-        <div class="bar-value">96.0%</div>
+        <div class="bar-value">86.0%</div>
     </div>
     
 
@@ -1774,17 +1774,17 @@
                     
         <tr>
             <th>POSITIVE</th>
-            <td>49</td><td>1</td><td>0</td>
+            <td>41</td><td>9</td><td>0</td>
         </tr>
         
         <tr>
             <th>NEUTRAL</th>
-            <td>12</td><td>7</td><td>31</td>
+            <td>5</td><td>25</td><td>20</td>
         </tr>
         
         <tr>
             <th>NEGATIVE</th>
-            <td>0</td><td>2</td><td>48</td>
+            <td>0</td><td>7</td><td>43</td>
         </tr>
         
                 </tbody>
@@ -1812,7 +1812,7 @@
                         <th>Rating label</th>
                         <th>Model prediction</th>
                         
-        <th>NRC emotion</th>
+        <th>LLM emotion</th>
         
                         <th>Result</th>
                         <th>Review text</th>
@@ -1820,29 +1820,29 @@
                 </thead>
                 <tbody>
                     
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>1</td>
             <td>Easy to give</td>
             <td>5.0</td>
             <td>POSITIVE</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>trust</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>The kids will use it</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>2</td>
             <td>Perfume smell :(</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>disgust</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>The cards were fine but had a perfume smell - why do items you buy have to smell??</td>
         </tr>
         
@@ -1950,16 +1950,16 @@
             <td>Happy with this purchase. Great product.  Really hard to beat for the price, and comfortable. I would highly recommend this product, I brought it for my daughter  so far solid product, no issues, charges fast and very quick shipping. definitely recommend Shipping was speedy.</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>11</td>
             <td>Five Stars</td>
             <td>5.0</td>
             <td>POSITIVE</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>trust</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>Works</td>
         </tr>
         
@@ -1970,22 +1970,22 @@
             <td>NEGATIVE</td>
             <td>NEGATIVE</td>
             
-            <td>anger</td>
+            <td>sadness</td>
             
             <td class="match">Match</td>
             <td>Horrible!  This came with NO note, no mention of who it was from or the amount.  I added a gift message during checkout but there was nothing in the tin except a crumpled up paper gift card.  I was so embarrassed when the recipient received it.</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>13</td>
             <td>Gift Card</td>
             <td>5.0</td>
             <td>POSITIVE</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>trust</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>As advertised.</td>
         </tr>
         
@@ -2054,16 +2054,16 @@
             <td>Very disappointed with Amazon (for the first time in many years of buying everything and anything from you).  I deliberately paid for a tin and gift wrapping for the gift cards, also selecting the option that states that the item is clearly a gift so that my daughter and her husband would get a surprise and have a parcel to put under the Christmas tree, but on receiving the two packages they were provided with an Amazon receipt which stated that there were two gift cards worth $150 each inside!!!</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>19</td>
             <td>Gift Certificate</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
-            <td>sadness</td>
+            <td>disgust</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>This gift requested by my grandsons.  Other gift certificates from other vendors arrived in a presentable gift box ready for gift wrapping.  These arrived just as I would have taken them from a carousal in a grocery store.  Not complaining, just not impressed.</td>
         </tr>
         
@@ -2080,16 +2080,16 @@
             <td>Cant go wrong with a gift card.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>21</td>
             <td>good</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>trust</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>not bad</td>
         </tr>
         
@@ -2119,16 +2119,16 @@
             <td>The person receiving and person from was not put on correctly.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>24</td>
             <td>Arrived damaged, battered and non giftable</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>sadness</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>Some arrived great but one arrived beaten up. Gift cards should be giftable :(</td>
         </tr>
         
@@ -2262,16 +2262,16 @@
             <td>I gave these cards as gifts. There isn&#x27;t any money on them.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>35</td>
             <td>Three Stars</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
-            <td>joy</td>
+            <td>trust</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>Good</td>
         </tr>
         
@@ -2295,7 +2295,7 @@
             <td>NEUTRAL</td>
             <td>NEUTRAL</td>
             
-            <td>disgust</td>
+            <td>joy</td>
             
             <td class="match">Match</td>
             <td>I love the floral box but I&#x27;m not a fan of the fact that the card itself does not show the amount</td>
@@ -2405,16 +2405,16 @@
             <td>product didn&#x27;t work</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>46</td>
             <td>I will keep trying. Thank you</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>sadness</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>Could not get it</td>
         </tr>
         
@@ -2451,7 +2451,7 @@
             <td>NEGATIVE</td>
             <td>NEGATIVE</td>
             
-            <td>anger</td>
+            <td>sadness</td>
             
             <td class="match">Match</td>
             <td>Wasn’t what I wanted</td>
@@ -2503,7 +2503,7 @@
             <td>NEUTRAL</td>
             <td>NEUTRAL</td>
             
-            <td>sadness</td>
+            <td>anger</td>
             
             <td class="match">Match</td>
             <td>Great gift card presentation device.  However, the paint on edges of the lids was marred/chipped.  Ordered replacements still not perfect.</td>
@@ -2607,7 +2607,7 @@
             <td>NEUTRAL</td>
             <td>POSITIVE</td>
             
-            <td>joy</td>
+            <td>trust</td>
             
             <td class="mismatch">Mismatch</td>
             <td>siempre me resulta de ayuda para las compras de mis productos en Amazon</td>
@@ -2633,22 +2633,22 @@
             <td>NEGATIVE</td>
             <td>NEGATIVE</td>
             
-            <td>sadness</td>
+            <td>disgust</td>
             
             <td class="match">Match</td>
             <td>Not good</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>64</td>
             <td>I couldn’t get the code, customer service made a mistake trying to help.</td>
             <td>1.0</td>
             <td>NEGATIVE</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>anger</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>So I ordered three gift cards for some friends and family. Two ended up staying with me because some family members never bothered to show up. One went to my sister. This particular one.. the sticker for the code would absolutely not peel off. I even tried to scrape it off. I called customer service for help and the lady whom helped me was very nice and helpful. However, she accredited my account all three gift cards, including the one I just gave my sister for Christmas. I did not know this since I am brand new to using amazon and all this stuff. And I only called to get the code for this ONE anyways. Not all three. Now my sisters gift card is completely invalid and I just gave it to her! I wish I could perhaps have it refunded for her. I had no idea when using my gift card, the one that I called about, that hers was applied to my cart at checkout as well! After the holidays I don’t have the money to get my sister another gift card. Hopefully amazon can help refund that for her. I will update if they help. And if they don’t for that matter!.. otherwise it’s a regular gift card. So it’s fine. I’m just fuming at the mistake they cost me.&lt;br /&gt;&lt;br /&gt;Edit for if anyone from amazon reads this. The woman that helped was incredibly nice and helpful. It was just a communication mistake I believe. But I do hope to get refunded for my one gift card for my sister so she can have her gift. Especially since I called to only get the code for ONE that wouldn’t peel off to reveal the code.</td>
         </tr>
         
@@ -2659,7 +2659,7 @@
             <td>NEGATIVE</td>
             <td>NEGATIVE</td>
             
-            <td>fear</td>
+            <td>anger</td>
             
             <td class="match">Match</td>
             <td>This card arrived. It was a replacement card for a previous one misdelivered and stolen. This new card shows $.00 value. The value and serial number are not listed on the order. The card has a serial number with no value. How do I know it&#x27;s good? I want to deliver it as a gift.</td>
@@ -2711,7 +2711,7 @@
             <td>NEUTRAL</td>
             <td>NEGATIVE</td>
             
-            <td>sadness</td>
+            <td>anger</td>
             
             <td class="mismatch">Mismatch</td>
             <td>I thought I was going to get a 10% bonus with the reload of $100, but I only got the $100.&lt;br /&gt;&lt;br /&gt;no frills, just tied up money.</td>
@@ -2808,16 +2808,16 @@
             <td>Should have given the gift message with the gift card so my brother knew who it was from.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>77</td>
             <td>Three Stars</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
-            <td>joy</td>
+            <td>trust</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>good</td>
         </tr>
         
@@ -2834,16 +2834,16 @@
             <td>That’s a shame I had to pay to spend $50.00.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>79</td>
             <td>Be aware that card inside is cardboard and NOT plastic!</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
-            <td>anger</td>
+            <td>disgust</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>I can&#x27;t believe I&#x27;m actually writing a review for a gift card holder, but here we are! My cupcake holder arrived dirty, and I had to clean it with an alcohol wipe to remove all the sticky black residue on the front. Not sure what could have caused said residue, as nothing sticky was present elsewhere. The gift card itself, much to my surprise, was cardboard and NOT plastic like every other card I&#x27;ve ordered from Amazon in the past. Because of this the card was bent and creased in three of four corners due to being wedged into the box. The box itself (once cleaned) is really cute, but the lack of quality control is seriously disappointing.</td>
         </tr>
         
@@ -2854,7 +2854,7 @@
             <td>NEUTRAL</td>
             <td>NEGATIVE</td>
             
-            <td>disgust</td>
+            <td>anger</td>
             
             <td class="mismatch">Mismatch</td>
             <td>This was a simple gift but I felt my stomach turn when I was charged an extra&lt;br /&gt;4.95 just for the right to give Mastercard my money.</td>
@@ -2886,16 +2886,16 @@
             <td>I’ve now dealt with customer service I’m excess of 4 hours for one transaction. I place the original order on Sunday and told that it would take additional time to process my reload. How much time? Not the 5 minutes being offered on the website. NOPE. I WOULD HAVE TO WAIT 24 UP TO 48 HOURS!!  I wait for two days only to find out the order was canceled and that I would have to redo the reload. I do for whatever stupid reason and fast words 24 hours and STILL no balance available for the reload.&lt;br /&gt;&lt;br /&gt;At this point my order has been declined because what I thought would take 5 MINUTES has taken two separate reloads and several days later and I STILL DO NOT HAVE A RESOLUTION!&lt;br /&gt;&lt;br /&gt;I pointed out that I could’ve just purchased Amazon gift cards and loaded them faster than this garbage process!!!&lt;br /&gt;&lt;br /&gt;I’m so upset at how poorLy this has transacted!!!</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>83</td>
             <td>Three Stars</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>joy</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>So convenient and easy to use</td>
         </tr>
         
@@ -2912,16 +2912,16 @@
             <td>I bought a gift card reload on Prime Day.  There was an Amazon offer: &quot;Prime Member Exclusive - Get a $10 promotional credit when you buy $40 in Amazon Gift Cards or reload you gift card balance with $40 or more - Enter promotion code at checkout&quot;&lt;br /&gt;I purchased a $40 reload but I didn&#x27;t receive the $10 promotional credit.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>85</td>
             <td>Nice card, late delivery</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>sadness</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>The card was nice quality, but it was delivered a day later than promised, which had it arriving after the birthday party it was for.</td>
         </tr>
         
@@ -2932,7 +2932,7 @@
             <td>NEUTRAL</td>
             <td>NEGATIVE</td>
             
-            <td>surprise</td>
+            <td>disgust</td>
             
             <td class="mismatch">Mismatch</td>
             <td>I used reload once because they gave a free $10. Will I use it again? Doubt it. What&#x27;s the point when my account already has a linked credit card?</td>
@@ -2951,16 +2951,16 @@
             <td>I was disappointed to find I did not get the advertised $10 added to my reload of my gift card. Alas. There was a tidbit that was not included in this misleading promise. Bummer.</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>88</td>
             <td>Works but you don&#x27;t get any bonus like they advertise</td>
             <td>1.0</td>
             <td>NEGATIVE</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>anger</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>I never got the bonus for reloading my account</td>
         </tr>
         
@@ -3003,16 +3003,16 @@
             <td>I like that it was so easy to load then use on my account</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>92</td>
             <td>Apples narrow market</td>
             <td>4.0</td>
             <td>POSITIVE</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>trust</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>Hate to buy these at full price but worth it</td>
         </tr>
         
@@ -3192,7 +3192,7 @@
             <td>POSITIVE</td>
             <td>POSITIVE</td>
             
-            <td>trust</td>
+            <td>joy</td>
             
             <td class="match">Match</td>
             <td>A nice way to have money available in case of capital controls :)</td>
@@ -3237,55 +3237,55 @@
             <td>GEEES............PUT THE DENOMINATION ON THEM !&lt;br /&gt;Can&#x27;t you see the problem this is causing people : (</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>110</td>
             <td>Good value,  there gift cards.</td>
             <td>5.0</td>
             <td>POSITIVE</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>trust</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>Good value, there gift cards.</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>111</td>
             <td>Good gift</td>
             <td>4.0</td>
             <td>POSITIVE</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
-            <td>joy</td>
+            <td>trust</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>Good for any occasion.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>112</td>
             <td>Don’t know what this is and how to use. Please get back to me.</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>surprise</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>Don’t know what this is or when I bought it. Please get back to me.</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>113</td>
             <td>NOT HAPPY with Kindle Gift Card</td>
             <td>1.0</td>
             <td>NEGATIVE</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>anger</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>My darling husband innocently bought me a $50 Kindle Gift Card for Christmas thinking it would give me hours of reading pleasure.  However, there seems to be no way of earmarking the gift card for Kindle books only.  The next very mundane purchase I made on Amazon came out of the gift card, using the entire amount.  Neither of us is happy about this.  Never again.  (By the way, I love my Kindle.  We&#x27;ll just never buy a Kindle gift card again.)</td>
         </tr>
         
@@ -3341,16 +3341,16 @@
             <td>Invite for wedding / Birthday party / Baby shower...!! Go to Amazon and order gift card ... See that’s so easy and best thing to gift ...</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>118</td>
             <td>Low rating becuase the package blew away...</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>anger</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>All was great until the delivery driver set a small LIGHT package on the doorstep instead of security it with a rock or something heavy. The giftcard likely blew away....</td>
         </tr>
         
@@ -3393,16 +3393,16 @@
             <td>I love being able to add money to this card! It is very convenient!</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>122</td>
             <td>Sunday delivery was excellent BUT the birthday greeting I wrote was non-existent nor ...</td>
             <td>2.0</td>
             <td>NEGATIVE</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>anger</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>Sunday delivery was excellent BUT the birthday greeting I wrote was non-existent nor was there any indication to the recipient that it was I who sent it.  Not good.  Recipient after checking with a few people finally called me long distance to ask if I had sent it.  Amazon, you need to do a better job at this.  Again, I applaud the free one-day delivery but that benefit was negated by the sloppy handling of the greeting I had written for the recipient.</td>
         </tr>
         
@@ -3426,7 +3426,7 @@
             <td>NEUTRAL</td>
             <td>NEGATIVE</td>
             
-            <td>sadness</td>
+            <td>anger</td>
             
             <td class="mismatch">Mismatch</td>
             <td>Was this card activated and ready to use?&lt;br /&gt;It was a Birthday Gift to My Mom, Georgia Sanchez. My Mom Georgia Sanchez, tried to use the card again and it didn’t work.</td>
@@ -3445,16 +3445,16 @@
             <td>Anything that I do with this company seems to have a good ending!</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>126</td>
             <td>Package was damaged.</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
-            <td>joy</td>
+            <td>trust</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>This product is great for moisturizing around the eyes. It makes them feel vibrant and takes away the look of being tired.</td>
         </tr>
         
@@ -3471,16 +3471,16 @@
             <td>Was tampered with upon arrival. Called Nordstrom to see if there was any balance on the giftcard, when they informed us that the card had immediately been voided after activation. Do not purchase this.</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>128</td>
             <td>Reload</td>
             <td>5.0</td>
             <td>POSITIVE</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>joy</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>Took a little bit to figure out but very neat being able to use my gift card for this</td>
         </tr>
         
@@ -3523,16 +3523,16 @@
             <td>I will give this no star but there is no choice for none.&lt;br /&gt;What an embarrassing moment to get a call from the recipient of this card to let me know that when she redeemed the gift card it has Zero balance. Bought 2 gift cards for birthday. I have to call the other celebrant that the card has no value and not to redeem it. DON&#x27;T BUY if you don&#x27;t want to get embarrass.&lt;br /&gt;First time I purchased gift cards from Amazon...  will never buy this again.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>132</td>
             <td>Great Gift but only if it works!</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>trust</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>Gift Cards are the truly personal gift.  My only problem is after I received it and could have given it away as a gift I got an email from Amazon - whoops we forgot to activate your card.  Be sure your card is good before giving as a gift.  Amazon is very good about notifying and doing refunds but this could leave a procrastinator in the lurch with a bad gift which really will be good when Amazon knows the problem.  Kudos for the quick second card and I&#x27;ve checked it and it&#x27;s fully loaded.  Thanks!</td>
         </tr>
         
@@ -3562,16 +3562,16 @@
             <td>Don&#x27;t like the cardboard box it came in to be given. It was purchased as a gift</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>135</td>
             <td>Huge</td>
             <td>2.0</td>
             <td>NEGATIVE</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>surprise</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>Huge!  Would  not fit in an envelope with card.</td>
         </tr>
         
@@ -3601,16 +3601,16 @@
             <td>Holiday Gift</td>
         </tr>
         
-        <tr data-result="Match">
+        <tr data-result="Mismatch">
             <td>138</td>
             <td>Cute gift card holder</td>
             <td>5.0</td>
             <td>POSITIVE</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
-            <td>joy</td>
+            <td>trust</td>
             
-            <td class="match">Match</td>
+            <td class="mismatch">Mismatch</td>
             <td>Nice gift card holder.</td>
         </tr>
         
@@ -3621,35 +3621,35 @@
             <td>NEUTRAL</td>
             <td>NEUTRAL</td>
             
-            <td>surprise</td>
+            <td>trust</td>
             
             <td class="match">Match</td>
             <td>The Amazon.com gift cards are nice and convenient but when they ship, nobody suspects that its a Christmas gift and people may decide to open them early. I guess they (your intended recipients) expect prior notice before opening random tins being sent to their residence. I am also not exactly sure what it looks like as I&#x27;ve never received one shipped, so I can only assume.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>140</td>
             <td>🙂</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>POSITIVE</td>
+            <td>NEUTRAL</td>
             
             <td>joy</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>:)</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>141</td>
             <td>Family didn&#x27;t know if this was a hack</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
-            <td>fear</td>
+            <td>surprise</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>Sent this to my brother-in-law for a Christmas gift. He didn&#x27;t even know where it came from and thought it was a swindle. I had filled out the gift card that was supposed to be with it. He tried it for something, and it worked. I called him after Christmas to see if he got it and he explained the story of how he had even called Amazon and they couldn&#x27;t give him any answers. So, until I called, he didn&#x27;t even know who sent it.</td>
         </tr>
         
@@ -3666,16 +3666,16 @@
             <td>I mean, I guess. I don&#x27;t see the point, just use your card in my opinion.</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>143</td>
             <td>The Tin Was Dented in Two Places</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>sadness</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>I love Amazon and I personally love getting their gift cards. Imagine my disappointment when I opened this box, which is a gift to my Mom, and discovered the tin was dented in two places. I know it happens but the other gift card I ordered, which was in a paper box, arrived perfect. Oh well, just took the card out of the tin and used another one.</td>
         </tr>
         
@@ -3705,16 +3705,16 @@
             <td>It didn’t work. The store said it was not activated. This was a GIFT!!! I am sure my sister was very embarrassed...</td>
         </tr>
         
-        <tr data-result="Mismatch">
+        <tr data-result="Match">
             <td>146</td>
             <td>IT DOESNT APPLY THE 10.00 dlls DISCOUNT OFFER AFTER RELOADING THE CARD</td>
             <td>3.0</td>
             <td>NEUTRAL</td>
-            <td>NEGATIVE</td>
+            <td>NEUTRAL</td>
             
             <td>anger</td>
             
-            <td class="mismatch">Mismatch</td>
+            <td class="match">Match</td>
             <td>Is definitely easy to use. However NEVER GIVES ME THE PROMISE PRICE!!!&lt;br /&gt;Every time I’m offered to reload de card and offers me the 10.00 less/discount/promo/offer from for my order n shipment orinal price,  IT DOES’NT  APLIES The 10.00 less to the order.</td>
         </tr>
         
@@ -3738,7 +3738,7 @@
             <td>POSITIVE</td>
             <td>POSITIVE</td>
             
-            <td>joy</td>
+            <td>trust</td>
             
             <td class="match">Match</td>
             <td>Thank</td>

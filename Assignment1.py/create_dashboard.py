@@ -7,7 +7,9 @@ from pathlib import Path
 SCRIPT_FOLDER = Path(__file__).parent
 
 ORIGINAL_FILE = SCRIPT_FOLDER / "first_100_with_emotions.jsonl"
-BALANCED_FILE = SCRIPT_FOLDER / "balanced_150_predictions.jsonl"
+BALANCED_FILE = (
+    SCRIPT_FOLDER / "balanced_150_revised_prompt_v2_predictions.jsonl"
+)
 OUTPUT_FILE = SCRIPT_FOLDER / "dashboard.html"
 
 COLORS = {
@@ -159,9 +161,13 @@ def build_dashboard_section(
         <th>LLM emotion</th>
         <th>NRC emotion</th>
         """
-    else:
+    elif emotion_mode == "nrc":
         emotion_headers = """
         <th>NRC emotion</th>
+        """
+    else:
+        emotion_headers = """
+        <th>LLM emotion</th>
         """
 
     review_rows = ""
@@ -301,7 +307,7 @@ def create_dashboard():
         "Three-class labels: 50 positive, 50 neutral, and 50 negative reviews.",
         balanced_reviews,
         ["POSITIVE", "NEUTRAL", "NEGATIVE"],
-        "nrc",
+        "llm",
     )
 
     html_page = f"""
