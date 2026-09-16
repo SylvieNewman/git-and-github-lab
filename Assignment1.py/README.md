@@ -132,6 +132,6 @@ The LLM can consider context, negation, and mixed statements. The NRC method is 
 
 ## Dashboard screenshots
 
-![Original first-100 dashboard](images/original-dashboard.png)
+![Original first-100 dashboard](original-dashboard.png)
 
-![Balanced 150-review dashboard](images/balanced-dashboard.png)
+![Balanced 150-review dashboard](balanced-dashboard.png)
