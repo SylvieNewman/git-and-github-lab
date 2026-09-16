@@ -119,6 +119,7 @@ The LLM can consider context, negation, and mixed statements. The NRC method is 
 - **Mixed review sentiment:** Some reviews included both a positive and negative statement. The revised prompt instructed the model to classify mixed reviews as neutral when the overall sentiment was not clearly positive or negative.
 - **Ratings and text did not always agree:** The star rating was retained as the assignment comparison label, but the written review sometimes supported a different sentiment classification.
 - **Emotion disagreement:** The LLM and NRC emotion labels sometimes differed because the LLM used context while the NRC method used individual lexicon words.
+- **Agent Communication:** The agent understood my commands for the most part. But there were a few times when prompting the model together that I had to reiterate what I wanted it to do. By asking questions to ensure it understood me, double check its accuracy and steer it in the right direction, I was able to work around many of the initial misunderstandings. It helps that I have used Codex for other projects and it understands me better by now.
 
 ## Files included
 
